@@ -11,6 +11,21 @@ public class HealthIndicator : MonoBehaviour
     private float _playerHealth;
     private Coroutine _healthCangeJob;
 
+    private void Start()
+    {
+        _playerHealth = FindObjectOfType<Player>().Health;
+    }
+
+    private void OnEnable()
+    {
+        Player.HealthCanged += OnHealthCanged;
+    }
+
+    private void OnDisable()
+    {
+        Player.HealthCanged -= OnHealthCanged;
+    }
+
     public void StartHealthCoroutine()
     {
         if (_healthCangeJob != null)
@@ -19,25 +34,10 @@ public class HealthIndicator : MonoBehaviour
         _healthCangeJob = StartCoroutine(ChangeHealth());
     } 
     
-    public void SetHealth(float health)
+    public void OnHealthCanged(float health)
     {
         _playerHealth = health;
         StartHealthCoroutine();
-    }
-
-    private void Start()
-    {
-        _playerHealth = FindObjectOfType<Player>().Health;
-    }
-   
-    private void OnEnable()
-    {
-        Player.HealthCanged += SetHealth;
-    }
-
-    private void OnDisable()
-    {
-        Player.HealthCanged -= SetHealth;
     }
 
     private IEnumerator ChangeHealth()

@@ -5,11 +5,11 @@ using UnityEngine.Events;
 
 public class Player : MonoBehaviour
 {
-    public static UnityAction<float> HealthCanged;
-
     private float _maxHealth = 100;
     private float _damage = 10;
     private float _treatment = 10;
+    
+    public static UnityAction<float> HealthCanged;
     
     public float Health { get; private set; }
 
@@ -17,6 +17,7 @@ public class Player : MonoBehaviour
     {
         Health = _maxHealth;
     }
+
     public void TakeDamage()
     {
         if(Health>=_damage)
